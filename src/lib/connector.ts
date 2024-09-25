@@ -2,7 +2,7 @@ import { ChainNotConfiguredError, createConnector } from "@wagmi/core";
 import type { IWeb3Auth } from "@web3auth/base";
 import * as pkg from "@web3auth/base";
 import type { IWeb3AuthModal } from "@web3auth/modal";
-import { Chain, getAddress, SwitchChainError, UserRejectedRequestError } from "viem";
+import { type Chain, getAddress, SwitchChainError, UserRejectedRequestError } from "viem";
 
 import type { Provider, Web3AuthConnectorParams } from "./interfaces";
 
@@ -39,14 +39,14 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
             await web3AuthInstance.connectTo(WALLET_ADAPTERS.AUTH, loginParams);
           } else {
             log.error("please provide valid loginParams when using @web3auth/no-modal");
-            throw new UserRejectedRequestError("please provide valid loginParams when using @web3auth/no-modal" as unknown as Error);
+            throw new UserRejectedRequestError(new Error("please provide valid loginParams when using @web3auth/no-modal"));
           }
         }
 
         let currentChainId = await this.getChainId();
         if (chainId && currentChainId !== chainId) {
-          const chain = await this.switchChain!({ chainId }).catch((error) => {
-            if (error.code === UserRejectedRequestError.code) throw error;
+          const chain = await this.switchChain?.({ chainId }).catch((error) => {
+            if (error?.code === UserRejectedRequestError.code) throw error;
             return { id: currentChainId };
           });
           currentChainId = chain?.id ?? currentChainId;
@@ -58,7 +58,7 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
       } catch (error) {
         log.error("error while connecting", error);
         this.onDisconnect();
-        throw new UserRejectedRequestError("Something went wrong" as unknown as Error);
+        throw new UserRejectedRequestError(new Error("Something went wrong"));
       }
     },
     async getAccounts() {
@@ -87,7 +87,7 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
           await web3AuthInstance.init();
         } else {
           log.error("please provide valid loginParams when using @web3auth/no-modal");
-          throw new UserRejectedRequestError("please provide valid loginParams when using @web3auth/no-modal" as unknown as Error);
+          throw new UserRejectedRequestError(new Error("please provide valid loginParams when using @web3auth/no-modal"));
         }
       }
 
