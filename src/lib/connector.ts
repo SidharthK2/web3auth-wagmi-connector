@@ -41,6 +41,7 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
           } else if (loginParams) {
             await web3AuthInstance.connectTo(WALLET_ADAPTERS.AUTH, loginParams);
           } else {
+            console.error("please provide valid loginParams when using @web3auth/no-modal");
             log.error("please provide valid loginParams when using @web3auth/no-modal");
             throw new UserRejectedRequestError(new Error("please provide valid loginParams when using @web3auth/no-modal"));
           }
@@ -59,6 +60,7 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
 
         return { accounts, chainId: currentChainId };
       } catch (error) {
+        console.error('error while connecting', error);
         log.error("error while connecting", error);
         this.onDisconnect();
         throw new UserRejectedRequestError(new Error("Something went wrong"));
@@ -89,6 +91,7 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
         } else if (loginParams) {
           await web3AuthInstance.init();
         } else {
+          console.error("please provide valid loginParams when using @web3auth/no-modal");
           log.error("please provide valid loginParams when using @web3auth/no-modal");
           throw new UserRejectedRequestError(new Error("please provide valid loginParams when using @web3auth/no-modal"));
         }
@@ -123,14 +126,17 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
             ? `https://images.toruswallet.io/${chain.nativeCurrency?.symbol.toLowerCase()}.svg`
             : "https://images.toruswallet.io/eth.svg",
         });
+        console.info("Chain Added: ", chain.name);
         log.info("Chain Added: ", chain.name);
         await web3AuthInstance.switchChain({ chainId: `0x${chain.id.toString(16)}` });
+        console.log("Chain Switched to ", chain.name);
         log.info("Chain Switched to ", chain.name);
         config.emitter.emit("change", {
           chainId,
         });
         return chain;
       } catch (error: unknown) {
+        console.error("Error: Cannot change chain", error);
         log.error("Error: Cannot change chain", error);
         throw new SwitchChainError(error as Error);
       }
