@@ -41,7 +41,7 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
           } else if (loginParams) {
             await web3AuthInstance.connectTo(WALLET_ADAPTERS.AUTH, loginParams);
           } else {
-
+//prettier-ignore
   //eslint-disable-next-line
             console.error("please provide valid loginParams when using @web3auth/no-modal");
             log.error("please provide valid loginParams when using @web3auth/no-modal");
@@ -62,7 +62,7 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
 
         return { accounts, chainId: currentChainId };
       } catch (error) {
-
+//prettier-ignore
   //eslint-disable-next-line
         console.error('error while connecting', error);
         log.error("error while connecting", error);
@@ -95,7 +95,7 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
         } else if (loginParams) {
           await web3AuthInstance.init();
         } else {
-
+//prettier-ignore
   //eslint-disable-next-line
           console.error("please provide valid loginParams when using @web3auth/no-modal");
           log.error("please provide valid loginParams when using @web3auth/no-modal");
@@ -132,12 +132,12 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
             ? `https://images.toruswallet.io/${chain.nativeCurrency?.symbol.toLowerCase()}.svg`
             : "https://images.toruswallet.io/eth.svg",
         });
-
+//prettier-ignore
   //eslint-disable-next-line
         console.info("Chain Added: ", chain.name);
         log.info("Chain Added: ", chain.name);
         await web3AuthInstance.switchChain({ chainId: `0x${chain.id.toString(16)}` });
-
+//prettier-ignore
   //eslint-disable-next-line
         console.log("Chain Switched to ", chain.name);
         log.info("Chain Switched to ", chain.name);
@@ -146,7 +146,7 @@ export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
         });
         return chain;
       } catch (error: unknown) {
-
+//prettier-ignore
   //eslint-disable-next-line
         console.error("Error: Cannot change chain", error);
         log.error("Error: Cannot change chain", error);
