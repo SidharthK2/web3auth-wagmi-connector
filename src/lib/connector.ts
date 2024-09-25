@@ -13,6 +13,7 @@ function isIWeb3AuthModal(obj: IWeb3Auth | IWeb3AuthModal): obj is IWeb3AuthModa
 }
 
 export function Web3AuthConnector(parameters: Web3AuthConnectorParams) {
+  console.log('----Using forked repo---')
   let walletProvider: Provider | null = null;
 
   const { web3AuthInstance, loginParams, modalConfig, id, name, type } = parameters;
